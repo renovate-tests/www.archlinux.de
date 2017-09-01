@@ -2,7 +2,7 @@
 
 namespace AppBundle\Controller;
 
-use Doctrine\DBAL\Driver\Connection;
+use Doctrine\DBAL\Driver\PDOConnection;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
@@ -10,13 +10,13 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
 class DownloadController extends Controller
 {
-    /** @var Connection */
+    /** @var PDOConnection */
     private $database;
 
     /**
-     * @param Connection $connection
+     * @param PDOConnection $connection
      */
-    public function __construct(Connection $connection)
+    public function __construct(PDOConnection $connection)
     {
         $this->database = $connection;
     }

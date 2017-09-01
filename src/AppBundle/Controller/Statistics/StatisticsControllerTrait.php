@@ -2,23 +2,23 @@
 
 namespace AppBundle\Controller\Statistics;
 
-use Doctrine\DBAL\Driver\Connection;
+use Doctrine\DBAL\Driver\PDOConnection;
 use Psr\Cache\CacheItemPoolInterface;
 
 trait StatisticsControllerTrait
 {
     /** @var int */
     private $rangeMonths = 3;
-    /** @var Connection */
+    /** @var PDOConnection */
     private $database;
     /** @var CacheItemPoolInterface */
     private $cache;
 
     /**
-     * @param Connection $connection
+     * @param PDOConnection $connection
      * @param CacheItemPoolInterface $cache
      */
-    public function __construct(Connection $connection, CacheItemPoolInterface $cache)
+    public function __construct(PDOConnection $connection, CacheItemPoolInterface $cache)
     {
         $this->database = $connection;
         $this->cache = $cache;

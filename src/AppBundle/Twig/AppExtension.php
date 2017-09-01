@@ -19,6 +19,7 @@ class AppExtension extends \Twig_Extension
      */
     public function formatBytes(int $bytes): string
     {
+        $bytes = (int)$bytes;
         $kb = 1024;
         $mb = $kb * 1024;
         $gb = $mb * 1024;

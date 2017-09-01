@@ -2,7 +2,7 @@
 
 namespace AppBundle\Controller;
 
-use Doctrine\DBAL\Driver\Connection;
+use Doctrine\DBAL\Driver\PDOConnection;
 use FeedIo\Factory;
 use FeedIo\Feed;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
@@ -14,16 +14,16 @@ use Symfony\Component\Asset\Packages;
 
 class RecentPackagesController extends Controller
 {
-    /** @var Connection */
+    /** @var PDOConnection */
     private $database;
     /** @var Packages */
     private $assetPackages;
 
     /**
-     * @param Connection $connection
+     * @param PDOConnection $connection
      * @param Packages $assetPackages
      */
-    public function __construct(Connection $connection, Packages $assetPackages)
+    public function __construct(PDOConnection $connection, Packages $assetPackages)
     {
         $this->database = $connection;
         $this->assetPackages = $assetPackages;

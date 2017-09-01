@@ -6,7 +6,7 @@ use AppBundle\ArchLinux\PackageDatabaseDownloader;
 use Psr\Cache\CacheItemPoolInterface;
 use AppBundle\ArchLinux\Package;
 use AppBundle\ArchLinux\PackageDatabase;
-use Doctrine\DBAL\Driver\Connection;
+use Doctrine\DBAL\Driver\PDOConnection;
 use Doctrine\DBAL\Driver\Statement;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Command\LockableTrait;
@@ -81,7 +81,7 @@ class UpdatePackagesCommand extends ContainerAwareCommand
         'package_relation',
         'repositories',
     );
-    /** @var Connection */
+    /** @var PDOConnection */
     private $database;
     /** @var CacheItemPoolInterface */
     private $cache;
@@ -92,13 +92,13 @@ class UpdatePackagesCommand extends ContainerAwareCommand
 
     /**
      * @param PackageDatabaseDownloader $packageDatabaseDownloader
-     * @param Connection $connection
+     * @param PDOConnection $connection
      * @param CacheItemPoolInterface $cache
      * @param Client $guzzleClient
      */
     public function __construct(
         PackageDatabaseDownloader $packageDatabaseDownloader,
-        Connection $connection,
+        PDOConnection $connection,
         CacheItemPoolInterface $cache,
         Client $guzzleClient
     ) {
@@ -124,7 +124,7 @@ class UpdatePackagesCommand extends ContainerAwareCommand
         if (!$input->getOption('purge') && !$input->getOption('reset') && !$this->hasMirrorUpdated()) {
             $this->printDebug('No updated packages available...', $output);
 
-            return;
+            return 0;
         }
 
         try {
@@ -211,6 +211,8 @@ class UpdatePackagesCommand extends ContainerAwareCommand
                 $output
             );
         }
+
+        return 0;
     }
 
     /**

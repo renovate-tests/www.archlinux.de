@@ -2,7 +2,7 @@
 
 namespace AppBundle\Controller;
 
-use Doctrine\DBAL\Driver\Connection;
+use Doctrine\DBAL\Driver\PDOConnection;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -11,16 +11,16 @@ use Symfony\Component\Routing\RouterInterface;
 
 class PackageDetailsController extends Controller
 {
-    /** @var Connection */
+    /** @var PDOConnection */
     private $database;
     /** @var RouterInterface */
     private $router;
 
     /**
-     * @param Connection $connection
+     * @param PDOConnection $connection
      * @param RouterInterface $router
      */
-    public function __construct(Connection $connection, RouterInterface $router)
+    public function __construct(PDOConnection $connection, RouterInterface $router)
     {
         $this->database = $connection;
         $this->router = $router;

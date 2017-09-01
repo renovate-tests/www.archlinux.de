@@ -2,7 +2,7 @@
 
 namespace AppBundle\Command\Update;
 
-use Doctrine\DBAL\Driver\Connection;
+use Doctrine\DBAL\Driver\PDOConnection;
 use FeedIo\Factory;
 use FeedIo\Feed\ItemInterface;
 use FeedIo\FeedInterface;
@@ -15,13 +15,13 @@ class UpdateNewsCommand extends ContainerAwareCommand
 {
     use LockableTrait;
 
-    /** @var Connection */
+    /** @var PDOConnection */
     private $database;
 
     /**
-     * @param Connection $connection
+     * @param PDOConnection $connection
      */
-    public function __construct(Connection $connection)
+    public function __construct(PDOConnection $connection)
     {
         parent::__construct();
         $this->database = $connection;

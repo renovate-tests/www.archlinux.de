@@ -2,7 +2,7 @@
 
 namespace AppBundle\Command\Update;
 
-use Doctrine\DBAL\Driver\Connection;
+use Doctrine\DBAL\Driver\PDOConnection;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Command\LockableTrait;
 use Symfony\Component\Console\Input\InputInterface;
@@ -13,16 +13,16 @@ class UpdateReleasesCommand extends ContainerAwareCommand
 {
     use LockableTrait;
 
-    /** @var Connection */
+    /** @var PDOConnection */
     private $database;
     /** @var Client */
     private $guzzleClient;
 
     /**
-     * @param Connection $connection
+     * @param PDOConnection $connection
      * @param Client $guzzleClient
      */
-    public function __construct(Connection $connection, Client $guzzleClient)
+    public function __construct(PDOConnection $connection, Client $guzzleClient)
     {
         parent::__construct();
         $this->database = $connection;
@@ -164,7 +164,7 @@ class UpdateReleasesCommand extends ContainerAwareCommand
     }
 
     /**
-     * @return mixed
+     * @return array
      */
     private function getRelengReleases(): array
     {

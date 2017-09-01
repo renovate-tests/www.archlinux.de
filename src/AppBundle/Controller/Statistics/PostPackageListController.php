@@ -3,7 +3,7 @@
 namespace AppBundle\Controller\Statistics;
 
 use AppBundle\Service\GeoIp;
-use Doctrine\DBAL\Driver\Connection;
+use Doctrine\DBAL\Driver\PDOConnection;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
@@ -21,7 +21,7 @@ class PostPackageListController extends Controller
     private $count = 10;
     /** @var bool */
     private $quiet = false;
-    /** @var Connection */
+    /** @var PDOConnection */
     private $database;
     /** @var RouterInterface */
     private $router;
@@ -29,11 +29,11 @@ class PostPackageListController extends Controller
     private $geoIp;
 
     /**
-     * @param Connection $connection
+     * @param PDOConnection $connection
      * @param RouterInterface $router
      * @param GeoIp $geoIp
      */
-    public function __construct(Connection $connection, RouterInterface $router, GeoIp $geoIp)
+    public function __construct(PDOConnection $connection, RouterInterface $router, GeoIp $geoIp)
     {
         $this->database = $connection;
         $this->router = $router;

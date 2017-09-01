@@ -2,7 +2,7 @@
 
 namespace AppBundle\Command\Config;
 
-use Doctrine\DBAL\Driver\Connection;
+use Doctrine\DBAL\Driver\PDOConnection;
 use League\ISO3166\ISO3166;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
@@ -10,13 +10,13 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class UpdateCountriesCommand extends ContainerAwareCommand
 {
-    /** @var Connection */
+    /** @var PDOConnection */
     private $database;
 
     /**
-     * @param Connection $connection
+     * @param PDOConnection $connection
      */
-    public function __construct(Connection $connection)
+    public function __construct(PDOConnection $connection)
     {
         parent::__construct();
         $this->database = $connection;

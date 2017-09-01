@@ -3,7 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Service\GeoIp;
-use Doctrine\DBAL\Driver\Connection;
+use Doctrine\DBAL\Driver\PDOConnection;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -11,16 +11,16 @@ use Symfony\Component\HttpFoundation\Response;
 
 class MirrorController extends Controller
 {
-    /** @var Connection */
+    /** @var PDOConnection */
     private $database;
     /** @var GeoIp */
     private $geoIp;
 
     /**
-     * @param Connection $connection
+     * @param PDOConnection $connection
      * @param GeoIp $geoIp
      */
-    public function __construct(Connection $connection, GeoIp $geoIp)
+    public function __construct(PDOConnection $connection, GeoIp $geoIp)
     {
         $this->database = $connection;
         $this->geoIp = $geoIp;
@@ -56,7 +56,7 @@ class MirrorController extends Controller
         if ($releasedate->rowCount() == 0) {
             throw $this->createNotFoundException('ISO image was not found');
         }
-        $lastsync = $releasedate->fetchColumn();
+        $lastsync = (int)$releasedate->fetchColumn();
 
         return $this->redirectToMirror('iso/' . $version . '/' . $file, $lastsync, $request);
     }
@@ -99,7 +99,7 @@ class MirrorController extends Controller
             if ($pkgdate->rowCount() == 0) {
                 throw $this->createNotFoundException('Package was not found');
             }
-            $lastsync = $pkgdate->fetchColumn();
+            $lastsync = (int)$pkgdate->fetchColumn();
             return $this->redirectToMirror($repository . '/os/' . $architecture . '/' . $file, $lastsync, $request);
         }
         throw $this->createNotFoundException('Package was not found');

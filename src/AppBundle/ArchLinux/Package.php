@@ -48,7 +48,7 @@ class Package
 
     /**
      * @param string $key
-     * @param string $default
+     * @param string|null $default
      * @return null|string
      */
     private function readValue(string $key, ?string $default = ''): ?string
@@ -63,7 +63,7 @@ class Package
 
     /**
      * @param string $key
-     * @param array $default
+     * @param array|null $default
      * @return array|null
      */
     private function readList(string $key, ?array $default = []): ?array
@@ -131,7 +131,7 @@ class Package
      */
     public function getCompressedSize(): int
     {
-        return $this->readValue('CSIZE', 0);
+        return (int)$this->readValue('CSIZE', '0');
     }
 
     /**
@@ -139,7 +139,7 @@ class Package
      */
     public function getInstalledSize(): int
     {
-        return $this->readValue('ISIZE', 0);
+        return (int)$this->readValue('ISIZE', '0');
     }
 
     /**
@@ -151,17 +151,17 @@ class Package
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getSHA256SUM(): string
+    public function getSHA256SUM(): ?string
     {
         return $this->readValue('SHA256SUM', null);
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getPGPSignature(): string
+    public function getPGPSignature(): ?string
     {
         return $this->readValue('PGPSIG', null);
     }
@@ -195,7 +195,7 @@ class Package
      */
     public function getBuildDate(): int
     {
-        return $this->readValue('BUILDDATE', 0);
+        return (int)$this->readValue('BUILDDATE', '0');
     }
 
     /**
